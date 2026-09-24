@@ -7,10 +7,12 @@ public class FichierNumerique extends Album {
     private double taille;
     private int duree;
 
-    public FichierNumerique(String nom, String auteur, LocalDate sortie, int quantite) {
+    public FichierNumerique(String nom, String auteur, LocalDate sortie, int quantite, String format, double taille, int duree) {
         super(nom, auteur, sortie, quantite);
+        this.format = format;
+        this.taille = taille;
+        this.duree = duree;
     }
-
 
     public String getFormat() {
         return format;

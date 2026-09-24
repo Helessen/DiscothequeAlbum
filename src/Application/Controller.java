@@ -1,7 +1,7 @@
 package Application;
 
-import Modele.Album;
-import Modele.GestionDisque;
+import Modele.*;
+import Exception.SaisieInvalideException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,15 +30,19 @@ public class Controller {
         return choix;
     }
 
-    public static void ajouterDisque(ArrayList<Album> album) throws AuteurException, DisqueException {
+    public static void ajouterDisque() throws SaisieInvalideException {
 
         System.out.println("Saisissez le nom du disque");
         String titre = sc.nextLine();
+        if (titre.isEmpty()) {
+            throw new SaisieInvalideException("Le titre de l'album est obligatoire.");
+        }
+
         System.out.println("Saisissez la date de sortie (jj/mm/aaaa) : ");
         String dateSaisie = sc.nextLine();
 
-        if (titre.isEmpty() || dateSaisie.isEmpty()) {
-            throw new DisqueException("Titre ou date sortie non renseigné");
+        if (dateSaisie.isEmpty()) {
+            throw new SaisieInvalideException("La date de sortie est obligatoire.");
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -46,20 +50,113 @@ public class Controller {
         try {
             sortie = LocalDate.parse(dateSaisie, formatter);
         } catch (DateTimeParseException e) {
-            System.out.println("Format de date invalide. Utilisez le format jj/mm/aaaa.");
-            return; // ou gérer l'erreur selon ta logique
+            throw new SaisieInvalideException("La date doit être au format jj/mm/aaaa.");
         }
 
-        System.out.println("Saisissez le nom de l'auteur");
+        System.out.println("Saisissez le nom du chanteur/groupe.");
         String nom = sc.nextLine();
 
-        System.out.println("Saisissez le prénom de l'auteur");
-        String prenom = sc.nextLine();
-        if (nom.isEmpty() || prenom.isEmpty()) {
-            throw new AuteurException("Nom ou prénom auteur non renseigné");
+        if (nom.isEmpty()) {
+            throw new SaisieInvalideException("Nom du chanteur/groupe non renseigné");
         }
 
-        GestionDisque.ajouterDisque(album);
+        System.out.println("Quel est la quantité de disque dans l'album ? (tapper 1 si numérique)");
+        int quantite = 0;
+        try {
+            quantite = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            sc.nextLine();
+            throw new SaisieInvalideException("La quantité doit être un nombre entier valide.");
+        }
+
+        if(quantite <= 0) {
+            throw new SaisieInvalideException("La quantité doit être supérieur à 0.")
+        }
+
+        System.out.println("Quel est votre type d'Album ?");
+        System.out.println("[1]CD - [2]Vinyle - [3]Numérique");
+        int choix = sc.nextInt();
+        sc.nextLine();
+        Album nouveauDisque = null;
+
+        switch (choix) {
+            case 1 :
+                System.out.println("Quel est le numéro du CD ?");
+                String numero = sc.nextLine();
+                if(numero.isEmpty()) {
+                    throw new SaisieInvalideException("Renseigner un numéro.");
+                }
+                System.out.println("Quel est le type d'album ?");
+                String type = sc.nextLine();
+                if(type.isEmpty()){
+                    throw new SaisieInvalideException("Type de CD non rempli.");
+                }
+                nouveauDisque = new CompactDisque(titre, nom, sortie, quantite, numero,type);
+                break;
+            case 2:
+                System.out.println("Quel est le numéro de vinyle ?");
+                String numeroV = sc.nextLine();
+                int tailleV = 0;
+                if(numeroV.isEmpty()){
+                    throw new SaisieInvalideException("Renseigner un numéro.");
+                }
+                System.out.println("Quel est la taille du vinyle ?");
+                try {
+                    tailleV = sc.nextInt();
+                    sc.nextLine();
+                } catch (InputMismatchException e) {
+                    sc.nextLine();
+                    throw new SaisieInvalideException("La quantité doit être un nombre entier valide.");
+                }
+                if(tailleV <= 0) {
+                    throw new SaisieInvalideException("La valeur ne peut-être inférieur à 0.");
+                }
+                nouveauDisque = new DisqueVinyle(titre, nom, sortie, quantite, numeroV, tailleV);
+                break;
+            case 3 :
+                System.out.println("Quel est le format du fichier numérique ?");
+                String format = sc.nextLine();
+                if(format.isEmpty()){
+                    throw new SaisieInvalideException("Format non renseigné.");
+                }
+                System.out.println("Quelle est la taille du fichier audio (en MO) ?");
+                double taille = 0;
+                try {
+                    taille = sc.nextDouble();
+                    sc.nextLine();
+                } catch(InputMismatchException e) {
+                    sc.nextLine();
+                    throw new SaisieInvalideException("Erreur dans la saisie de la valeur.");
+                }
+                if(taille <= 0) {
+                    throw new SaisieInvalideException("La valeur ne peut-être inférieur à 0.");
+                }
+                int duree = 0;
+                System.out.println("Combien de temps durent le fichier ? (seconde ou min)");
+                try {
+                    duree = sc.nextInt();
+                    sc.nextLine();
+                } catch (InputMismatchException e) {
+                    sc.nextLine();
+                    throw new SaisieInvalideException("La quantité doit être un nombre entier valide");
+                }
+                if(duree <= 0) {
+                    throw new SaisieInvalideException("La valeur ne peut-être inférieur à 0.");
+                }
+                nouveauDisque = new FichierNumerique(titre, nom, sortie, quantite, format, taille, duree);
+                break;
+            default:
+                throw new SaisieInvalideException("Choix de type d'album invalide (choisir entre 1 et 3).");
+        }
+
+        boolean ajout = GestionDisque.ajouterDisque(nouveauDisque);
+
+        if(ajout) {
+            System.out.println("Le disque a été enregistré avec succès dans la discothèque.");
+        } else {
+            System.out.println("Disque déjà présent dan la discothèque.");
+        }
     }
 
     public static void suppressionDisque() throws DisqueException {
