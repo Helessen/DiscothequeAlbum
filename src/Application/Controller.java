@@ -1,6 +1,8 @@
 package Application;
 
 import Modele.Album;
+import Exception.*;
+import Modele.GestionDisque;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +30,7 @@ public class Controller {
         return choix;
     }
 
-    public static void ajouterDisque(ArrayList<Album> disque) throws AuteurException, DisqueException, DoublonException {
+    public static void ajouterDisque() throws SaisieInvalideException, AlbumDejaExistantException {
 
         System.out.println("Saisissez le nom du disque");
         String titre = sc.nextLine();
@@ -36,7 +38,7 @@ public class Controller {
         String dateSaisie = sc.nextLine();
 
         if (titre.isEmpty() || dateSaisie.isEmpty()) {
-            throw new DisqueException("Titre ou date sortie non renseigné");
+            throw new SaisieInvalideException("Titre ou date sortie non renseigné");
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -51,48 +53,31 @@ public class Controller {
         System.out.println("Saisissez le nom de l'auteur");
         String nom = sc.nextLine();
 
-        System.out.println("Saisissez le prénom de l'auteur");
-        String prenom = sc.nextLine();
-        if (nom.isEmpty() || prenom.isEmpty()) {
-            throw new AuteurException("Nom ou prénom auteur non renseigné");
+        if (nom.isEmpty() || nom.isEmpty()) {
+            throw new SaisieInvalideException("Nom ou prénom auteur non renseigné");
         }
-        Auteur a = new Auteur(nom, prenom);
-        Disque album = new Disque(titre, a, sortie);
+        Album album = new Disque(titre, a, sortie);
         GestionDisque.ajouterDisque(album);
     }
 
-    public static void suppressionDisque() throws DisqueException {
+    public static void suppressionDisque() throws AlbumIntrouvableException, DiscothequeVideException, SaisieInvalideException {
         System.out.println("Entrez le nom du disque à supprimer :");
         String nomDisque = sc.nextLine();
 
         try {
             GestionDisque.supprimerDisque(nomDisque);
-        } catch (DisqueException e) {
+        } catch (DoublonException e) {
             if("MULTIPLE".equals(e.getMessage())) {
                 System.out.println("Plusieurs disque portent ce nom. Veuillez préciser l'auteur");
                 try {
-                    suppressionDisqueAuteur(nomDisque);
-                } catch (AuteurException ex) {
+                    suppressionDisque(nomDisque);
+                } catch (SaisieInvalideException ex) {
                     System.err.println("Erreur : " + ex.getMessage());
                 }
             } else {
                 System.err.println(e.getMessage());
             }
         }
-
-
-    }
-
-    public static void suppressionDisqueAuteur(String nomDisque) throws AuteurException {
-
-        System.out.println("Quel est le nom de l'auteur ?");
-        String nomA = sc.nextLine();
-        System.out.println("Quel est le prénom de l'auteur ?");
-        String prenomA = sc.nextLine();
-        if (nomA.isEmpty() || prenomA.isEmpty()) {
-            throw new AuteurException("Nom ou prénom non renseigné.");
-        }
-        GestionDisque.supprimerDisqueAuteur(nomDisque, nomA, prenomA);
     }
 
     public static void afficherDiscotheque() {

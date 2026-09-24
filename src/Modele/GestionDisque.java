@@ -38,25 +38,5 @@ public class GestionDisque {
             // Controller.suppressionDisqueAuteur(nomDisque); // On ne peux pas atteindre ce code car le throw l'en empêche
         }
     }
-    public static void supprimerDisqueAuteur(String titre, String nomA) {
-        Album aSupprimer = null;
-
-        for(Album item: discotheque){
-            if(item.getNom().equalsIgnoreCase(titre) && item.getAuteur().equalsIgnoreCase(nomA)) {
-                aSupprimer = item;
-                break;
-            }
-        }
-        if(aSupprimer != null) {
-            discotheque.remove(aSupprimer);
-            System.out.println("L'album " + aSupprimer.getNom() + " de " + aSupprimer.getAuteur() + " a bien été supprimé.");
-        } else {
-            System.out.println("Aucun album correspondant à cet auteur n'a été trouvé.");
-        }
-    }
-
-    public static ArrayList<Album> afficherDiscotheque() {
-        return discotheque;
-    }
 
 }
