@@ -1,12 +1,12 @@
 package Modele;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CompactDisque extends Album{
-    int numero;
-    int type;
+    private int numero;
+    private String type;
 
-    public CompactDisque(String nom, String auteur, Date sortie, int quantite, int numero, int type) {
+    public CompactDisque(String nom, String auteur, LocalDate sortie, int quantite, int numero, String type) {
         super(nom, auteur, sortie, quantite);
         this.numero = numero;
         this.type = type;
@@ -20,11 +20,11 @@ public class CompactDisque extends Album{
         this.numero = numero;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

@@ -1,0 +1,8 @@
+package Exception;
+
+public class DoublonException extends Exception{
+    public DoublonException(String msg){
+        super(msg);
+    }
+}
+
