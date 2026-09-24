@@ -1,15 +1,17 @@
 package Modele;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class DisqueVinyle extends Album {
     private String numero;
     private int taille;
 
-    public DisqueVinyle(String nom, String auteur, Date sortie, int quantite, String numero, int taille) {
+    public DisqueVinyle(String nom, String auteur, LocalDate sortie, int quantite, String numero, int taille) {
         super(nom, auteur, sortie, quantite);
         this.numero = numero;
         this.taille = taille;
     }
+
+
 
     public String getNumero() {
         return numero;
@@ -25,6 +27,11 @@ public class DisqueVinyle extends Album {
 
     public void setTaille(int taille) {
         this.taille = taille;
+    }
+
+    @Override
+    public String getSupport() {
+        return "Vinyle";
     }
 
     @Override

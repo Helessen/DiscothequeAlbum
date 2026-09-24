@@ -1,10 +1,15 @@
 package Modele;
 
+import java.time.LocalDate;
+
 public class FichierNumerique extends Album {
     private String format;
     private double taille;
     private int duree;
 
+    public FichierNumerique(String nom, String auteur, LocalDate sortie, int quantite) {
+        super(nom, auteur, sortie, quantite);
+    }
 
 
     public String getFormat() {
@@ -29,6 +34,11 @@ public class FichierNumerique extends Album {
 
     public void setDuree(int duree) {
         this.duree = duree;
+    }
+
+    @Override
+    public String getSupport() {
+        return "Numérique";
     }
 
     @Override
