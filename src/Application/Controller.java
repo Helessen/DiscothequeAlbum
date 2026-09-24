@@ -1,9 +1,6 @@
 package Application;
 
 import Modele.Album;
-import Exception.*;
-import Modele.DisqueVinyle;
-import Modele.GestionDisque;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,23 +28,15 @@ public class Controller {
         return choix;
     }
 
-    public static void ajouterDisque() throws AlbumDejaExistantException, SaisieInvalideException, DoublonException {
+    public static void ajouterDisque(ArrayList<Album> disque) throws AuteurException, DisqueException, DoublonException {
 
-        System.out.println("Type d'album (1 = CD, 2 = Vinyle, 3 = Fichier numérique");
         System.out.println("Saisissez le nom du disque");
         String titre = sc.nextLine();
         System.out.println("Saisissez la date de sortie (jj/mm/aaaa) : ");
-
         String dateSaisie = sc.nextLine();
-        int reponse = sc.nextInt();
-        if (reponse == 1) {
-
-        }
-
-
 
         if (titre.isEmpty() || dateSaisie.isEmpty()) {
-            throw new SaisieInvalideException("Saisie invalide");
+            throw new DisqueException("Titre ou date sortie non renseigné");
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -62,61 +51,65 @@ public class Controller {
         System.out.println("Saisissez le nom de l'auteur");
         String nom = sc.nextLine();
 
-        if (nom.isEmpty() || nom.isEmpty()) {
-            throw new SaisieInvalideException("Nom de l'auteur non renseigné");
+        System.out.println("Saisissez le prénom de l'auteur");
+        String prenom = sc.nextLine();
+        if (nom.isEmpty() || prenom.isEmpty()) {
+            throw new AuteurException("Nom ou prénom auteur non renseigné");
         }
-
-        Album album = new Album(titre, auteur, sortie, quantite);
+        Auteur a = new Auteur(nom, prenom);
+        Disque album = new Disque(titre, a, sortie);
         GestionDisque.ajouterDisque(album);
     }
 
-    public static void suppressionDisque() throws AlbumIntrouvableException, SaisieInvalideException {
+    public static void suppressionDisque() throws DisqueException {
         System.out.println("Entrez le nom du disque à supprimer :");
-        String nom = sc.nextLine();
+        String nomDisque = sc.nextLine();
 
         try {
-            GestionDisque.supprimerDisque(nom);
-        } catch (DoublonException e) {
+            GestionDisque.supprimerDisque(nomDisque);
+        } catch (DisqueException e) {
             if("MULTIPLE".equals(e.getMessage())) {
                 System.out.println("Plusieurs disque portent ce nom. Veuillez préciser l'auteur");
                 try {
-                    suppressionDisqueAuteur(nom);
-                } catch (SaisieInvalideException ex) {
+                    suppressionDisqueAuteur(nomDisque);
+                } catch (AuteurException ex) {
                     System.err.println("Erreur : " + ex.getMessage());
                 }
             } else {
                 System.err.println(e.getMessage());
             }
         }
+
+
     }
 
-    public static void suppressionDisqueAuteur(String nomDisque) throws AlbumIntrouvableException, SaisieInvalideException {
+    public static void suppressionDisqueAuteur(String nomDisque) throws AuteurException {
 
         System.out.println("Quel est le nom de l'auteur ?");
         String nomA = sc.nextLine();
         System.out.println("Quel est le prénom de l'auteur ?");
         String prenomA = sc.nextLine();
         if (nomA.isEmpty() || prenomA.isEmpty()) {
-            throw new SaisieInvalideException("Nom ou prénom non renseigné.");
+            throw new AuteurException("Nom ou prénom non renseigné.");
         }
-        GestionDisque.supprimerDisqueAuteur(nomA, prenomA);
+        GestionDisque.supprimerDisqueAuteur(nomDisque, nomA, prenomA);
     }
 
     public static void afficherDiscotheque() {
-        ArrayList<Album> listeAlbum = new ArrayList<>();
-        listeAlbum = GestionDisque.afficherDiscotheque();
+        ArrayList<Disque> bibli = new ArrayList<>();
+        bibli = GestionDisque.afficherDiscotheque();
         int cpt = 0;
 
-        if(listeAlbum.size() == 0) {
+        if(bibli.size() == 0) {
             System.out.println("*************************************************");
             System.out.println("Vous n'avez pas de disque dans votre discothèque.");
             System.out.println("*************************************************");
         } else {
             System.out.println("Voici les disques présent dans votre discothèque :");
             System.out.println("*****************************************************************************************");
-            for (Album item : listeAlbum) {
+            for (Disque item : bibli) {
                 cpt += 1;
-                System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getSortie());
+                System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getAnnee());
             }
             System.out.println("*****************************************************************************************");
         }
@@ -124,14 +117,14 @@ public class Controller {
 
     }
 
-    public static void lireDisque(ArrayList<Album> disque) {
+    public static void lireDisque(ArrayList<Disque> disque) {
         int cpt = 0;
         int choix = 0;
         System.out.println("Voici les disques présent dans votre discothèque :");
         System.out.println("*****************************************************************************************");
-        for (Album item : disque) {
+        for (Disque item : disque) {
             cpt += 1;
-            System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getSortie());
+            System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getAnnee());
         }
         System.out.println("*****************************************************************************************");
         try {
@@ -140,6 +133,8 @@ public class Controller {
             //e.printStackTrace();
             System.out.println("Erreur de saisi, veuillez recomencer.");
             sc.nextLine();
+
+
         }
     }
 }

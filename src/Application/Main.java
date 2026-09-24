@@ -3,15 +3,29 @@ package Application;
 public class Main {
     static void main() {
         boolean bool = false;
-        int choix;
-
+        int choix = 0;
         while (!bool) {
-            choix = Controller.menu();
             switch (choix) {
                 case 1 :
                     Controller.ajouterDisque();
+                    break;
+                case 2 :
+                    Controller.afficherDiscotheque();
+                    break;
+                case 3 :
+                    //Controller.rechercherAlbum();
+                    break;
+                case 4 :
+                    Controller.suppressionDisque();
+                    break;
+                case 0 :
+                    System.out.println("Fin du programme. Au revoir !");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Choix invalide, veuillez réessayer.");
+                    break;
             }
         }
-
     }
 }
