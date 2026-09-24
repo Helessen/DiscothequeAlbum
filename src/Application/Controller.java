@@ -1,6 +1,7 @@
 package Application;
 
 import Modele.Album;
+import Modele.GestionDisque;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,18 +18,19 @@ public class Controller {
 
         System.out.println("***********************************");
         System.out.println("Que souhaitez-vous faire :");
-        System.out.println("[1] Consulter la discothèque");
-        System.out.println("[2] Ajouter un disque");
-        System.out.println("[3] Supprimer un disque");
-        System.out.println("[4] Lire un disque");
-        System.out.println("[5] Quitter");
+        System.out.println("[1] Ajouter un album");
+        System.out.println("[2] Lister tous les albums");
+        System.out.println("[3] Rechercher un album");
+        System.out.println("[4] Supprimer un album");
+        System.out.println("[] Quitter");
         System.out.println("**********************************");
-        choix = sc.nextInt();
+        System.out.print("Votre choix : ");
+       choix = sc.nextInt();
         sc.nextLine();
         return choix;
     }
 
-    public static void ajouterDisque(ArrayList<Album> disque) throws AuteurException, DisqueException, DoublonException {
+    public static void ajouterDisque(ArrayList<Album> album) throws AuteurException, DisqueException {
 
         System.out.println("Saisissez le nom du disque");
         String titre = sc.nextLine();
@@ -56,8 +58,7 @@ public class Controller {
         if (nom.isEmpty() || prenom.isEmpty()) {
             throw new AuteurException("Nom ou prénom auteur non renseigné");
         }
-        Auteur a = new Auteur(nom, prenom);
-        Disque album = new Disque(titre, a, sortie);
+
         GestionDisque.ajouterDisque(album);
     }
 
@@ -83,20 +84,9 @@ public class Controller {
 
     }
 
-    public static void suppressionDisqueAuteur(String nomDisque) throws AuteurException {
-
-        System.out.println("Quel est le nom de l'auteur ?");
-        String nomA = sc.nextLine();
-        System.out.println("Quel est le prénom de l'auteur ?");
-        String prenomA = sc.nextLine();
-        if (nomA.isEmpty() || prenomA.isEmpty()) {
-            throw new AuteurException("Nom ou prénom non renseigné.");
-        }
-        GestionDisque.supprimerDisqueAuteur(nomDisque, nomA, prenomA);
-    }
 
     public static void afficherDiscotheque() {
-        ArrayList<Disque> bibli = new ArrayList<>();
+        ArrayList<Album> bibli = new ArrayList<>();
         bibli = GestionDisque.afficherDiscotheque();
         int cpt = 0;
 

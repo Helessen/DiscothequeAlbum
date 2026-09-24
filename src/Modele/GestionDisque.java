@@ -2,41 +2,51 @@ package Modele;
 
 import java.util.ArrayList;
 import Exception.AlbumDejaExistantException;
-import Exception.DoublonException;
 
 public class GestionDisque {
     private static ArrayList<Album> discotheque = new ArrayList<>();
 
-    public static void ajouterDisque(Album disque) throws AlbumDejaExistantException {
-        for(Album d : discotheque){
-            if (d.getNom().equalsIgnoreCase(disque.getNom()) && d.getAuteur().equalsIgnoreCase(disque.getAuteur())
-                    ) {
+    public static boolean ajouterDisque(Album album) throws AlbumDejaExistantException {
 
-                throw new AlbumDejaExistantException("Le disque existe déjà !");
+        for(Album d : discotheque){
+            if (d.getNom().equalsIgnoreCase(album.getNom()) && d.getAuteur().equalsIgnoreCase(album.getAuteur())
+                    ) {
+                return false;
             }
         }
-        discotheque.add(disque);
+        discotheque.add(album);
+        return  true;
     }
 
-    public static void supprimerDisque(String nomDisque) throws DoublonException {
-        ArrayList<Album> disqueTrouve = new ArrayList<>();
+    public static boolean supprimerDisque(String nomDisque) {
         boolean multiD = false;
+        Album a = null;
 
         for (Album item : discotheque) {
             if (item.getNom().equalsIgnoreCase(nomDisque)) {
-                disqueTrouve.add(item);
+                a = item;
             }
         }
-        if(disqueTrouve.isEmpty()){
-            System.out.println("Aucun disque trouvé avec ce titre.");
-        } else if (disqueTrouve.size() == 1) {
-            Album a = disqueTrouve.get(0);
+        if(a != null) {
             discotheque.remove(a);
-            System.out.println("l'album " + a.getNom() + " du chanteur " + a.getAuteur() + " a bien été supprimé.");
-        } else {
-            throw new DoublonException("MULTIPLE");
-            // Controller.suppressionDisqueAuteur(nomDisque); // On ne peux pas atteindre ce code car le throw l'en empêche
+            return true;
         }
+        return false;
+    }
+
+    public static ArrayList<Album> afficherDiscotheque() {
+        return discotheque;
+    }
+
+    public static Album rechercheDisque(String titre) {
+        //soit retourne un objet, soit retourne objet = null
+        Album a = null;
+
+        for(Album item : discotheque) {
+            if(item.getNom().equalsIgnoreCase(titre)) {
+                a = item;
+            }
+        } return a;
     }
 
 }
