@@ -16,6 +16,8 @@ public abstract class Album {
         this.quantite = quantite;
     }
 
+    public abstract String getSupport();
+
     public String getNom() {
         return nom;
     }
