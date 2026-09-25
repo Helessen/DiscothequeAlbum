@@ -1,6 +1,8 @@
 package Application;
 
 import static Application.Controller.menu;
+import static Application.Controller.viderDiscotheque;
+
 import Exception.*;
 
 public class Main {
@@ -24,6 +26,8 @@ public class Main {
                     case 4 :
                         Controller.suppressionDisque();
                         break;
+                    case 5 :
+                        Controller.viderDiscotheque();
                     case 0 :
                         System.out.println("Fin du programme. Au revoir !");
                         System.exit(0);

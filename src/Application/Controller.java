@@ -22,6 +22,7 @@ public class Controller {
         System.out.println("[2] Lister tous les albums");
         System.out.println("[3] Rechercher un album");
         System.out.println("[4] Supprimer un album");
+        System.out.println("[5] Vider la discothèque");
         System.out.println("[0] Quitter");
         System.out.println("**********************************");
         System.out.print("Votre choix : ");
