@@ -187,28 +187,24 @@ public class Controller {
     }
 
 
-   /* public static void afficherDiscotheque() {
+   public static void afficherDiscotheque() throws DiscothequeVideException {
         ArrayList<Album> bibli = new ArrayList<>();
         bibli = GestionDisque.afficherDiscotheque();
         int cpt = 0;
 
         if(bibli.size() == 0) {
-            System.out.println("*************************************************");
-            System.out.println("Vous n'avez pas de disque dans votre discothèque.");
-            System.out.println("*************************************************");
+            throw new DiscothequeVideException ("\n*************************************************\nVous n'avez pas de disque dans votre discothèque.\n*************************************************");
         } else {
             System.out.println("Voici les disques présent dans votre discothèque :");
             System.out.println("*****************************************************************************************");
-            for (Disque item : bibli) {
+            for (Album item : bibli) {
                 cpt += 1;
-                System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getAnnee());
+                System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getSortie() + " - Type :" + item.getSupport());
             }
             System.out.println("*****************************************************************************************");
         }
-
-
     }
-
+/*
     public static void lireDisque(ArrayList<Disque> disque) {
         int cpt = 0;
         int choix = 0;
