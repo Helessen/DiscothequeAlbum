@@ -199,7 +199,7 @@ public class Controller {
                 cpt += 1;
                 System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getSortie() + " - Type :" + item.getSupport());
             }
-            System.out.println("*****************************************************************************************");
+            System.out.println("***************************************************************************************");
         }
     }
 /*
