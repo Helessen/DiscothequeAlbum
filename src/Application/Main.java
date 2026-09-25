@@ -1,7 +1,7 @@
 package Application;
 
 import static Application.Controller.menu;
-import Exception.SaisieInvalideException;
+import Exception.*;
 
 public class Main {
     static void main() {
@@ -35,7 +35,9 @@ public class Main {
 
             } catch (SaisieInvalideException e) {
                 System.out.println("\n Erreur : " +e.getMessage() + "\n");
-            } catch (Exception e) {
+            } catch (DiscothequeVideException e){
+                System.out.println("\n Erreur : " + e.getMessage() + "\n");
+            } catch(Exception e) {
                 System.out.println(" \n Une erreur inatendu est survenue");
             }
         }
