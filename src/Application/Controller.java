@@ -14,7 +14,7 @@ public class Controller {
     static Scanner sc = new Scanner(System.in);
 
     public static int menu() {
-        int choix = 0;
+        int choix;
 
         System.out.println("***********************************");
         System.out.println("Que souhaitez-vous faire :");
@@ -25,18 +25,23 @@ public class Controller {
         System.out.println("[] Quitter");
         System.out.println("**********************************");
         System.out.print("Votre choix : ");
-       choix = sc.nextInt();
+        choix = sc.nextInt();
         sc.nextLine();
         return choix;
     }
 
     public static void ajouterDisque() throws SaisieInvalideException {
-
-        System.out.println("Saisissez le nom du disque");
-        String titre = sc.nextLine();
-        if (titre.isEmpty()) {
+        String titre;
+        try {
+            System.out.println("Saisissez le nom du disque");
+            titre = sc.nextLine();
+        } catch (SaisieInvalideException e) {
             throw new SaisieInvalideException("Le titre de l'album est obligatoire.");
         }
+
+        /*if (titre.isEmpty()) {
+
+        }*/
 
         System.out.println("Saisissez la date de sortie (jj/mm/aaaa) : ");
         String dateSaisie = sc.nextLine();
@@ -71,7 +76,7 @@ public class Controller {
         }
 
         if(quantite <= 0) {
-            throw new SaisieInvalideException("La quantité doit être supérieur à 0.")
+            throw new SaisieInvalideException("La quantité doit être supérieur à 0.");
         }
 
         System.out.println("Quel est votre type d'Album ?");
@@ -158,7 +163,7 @@ public class Controller {
             System.out.println("Disque déjà présent dan la discothèque.");
         }
     }
-
+/*
     public static void suppressionDisque() throws DisqueException {
         System.out.println("Entrez le nom du disque à supprimer :");
         String nomDisque = sc.nextLine();
@@ -223,5 +228,5 @@ public class Controller {
 
 
         }
-    }
+    }*/
 }

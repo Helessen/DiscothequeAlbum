@@ -1,22 +1,26 @@
 package Application;
 
+import static Application.Controller.menu;
+
 public class Main {
     static void main() {
         boolean bool = false;
         int choix = 0;
+
         while (!bool) {
+            choix = menu();
             switch (choix) {
                 case 1 :
                     Controller.ajouterDisque();
                     break;
                 case 2 :
-                    Controller.afficherDiscotheque();
+                    //Controller.afficherDiscotheque();
                     break;
                 case 3 :
                     //Controller.rechercherAlbum();
                     break;
                 case 4 :
-                    Controller.suppressionDisque();
+                    //Controller.suppressionDisque();
                     break;
                 case 0 :
                     System.out.println("Fin du programme. Au revoir !");
