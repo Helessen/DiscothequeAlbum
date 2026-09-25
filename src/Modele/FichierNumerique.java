@@ -49,7 +49,8 @@ public class FichierNumerique extends Album {
                 "format='" + format + '\'' +
                 ", taille=" + taille +
                 ", duree=" + duree +
-                '}';
+                '}' + super.toString() +
+                getSupport();
     }
 
 

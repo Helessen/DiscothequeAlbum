@@ -39,6 +39,7 @@ public class DisqueVinyle extends Album {
         return "DisqueVinyle{" +
                 "numero=" + numero +
                 ", taille=" + taille +
-                '}';
+                '}' + super.toString() +
+                getSupport();
     }
 }

@@ -195,7 +195,7 @@ public class Controller {
             System.out.println("***************************************************************************************");
             for (Album item : bibli) {
                 cpt += 1;
-                System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getSortie() + " - Type :" + item.getSupport());
+                System.out.println("[" + cpt + "]" + item);
             }
             System.out.println("***************************************************************************************");
         }
