@@ -6,6 +6,7 @@ import Exception.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -189,7 +190,11 @@ public class Controller {
         int cpt = 0;
 
         if(bibli.size() == 0) {
-            throw new DiscothequeVideException ("\n*************************************************\nVous n'avez pas de disque dans votre discothèque.\n*************************************************");
+            throw new DiscothequeVideException (
+                    "\n*************************************************" +
+                    "\nVous n'avez pas de disque dans votre discothèque." +
+                    "\n*************************************************"
+            );
         } else {
             System.out.println("Voici les disques présent dans votre discothèque :");
             System.out.println("*****************************************************************************************");

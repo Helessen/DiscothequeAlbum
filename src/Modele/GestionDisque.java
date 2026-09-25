@@ -49,4 +49,13 @@ public class GestionDisque {
         } return a;
     }
 
+    public static boolean viderDiscotheque() {
+        if(discotheque.size() == 0) {
+            return false;
+        } else {
+            discotheque.clear();
+        }
+        return true;
+    }
+
 }
