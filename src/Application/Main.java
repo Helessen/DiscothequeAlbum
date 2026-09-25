@@ -16,7 +16,7 @@ public class Main {
                         Controller.ajouterDisque();
                         break;
                     case 2 :
-                        //Controller.afficherDiscotheque();
+                        Controller.afficherDiscotheque();
                         break;
                     case 3 :
                         //Controller.rechercherAlbum();
