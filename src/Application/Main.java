@@ -21,13 +21,14 @@ public class Main {
                         Controller.afficherDiscotheque();
                         break;
                     case 3 :
-                        //Controller.rechercherAlbum();
+                        Controller.rechercherAlbum();
                         break;
                     case 4 :
                         Controller.suppressionDisque();
                         break;
                     case 5 :
                         Controller.viderDiscotheque();
+                        break;
                     case 0 :
                         System.out.println("Fin du programme. Au revoir !");
                         System.exit(0);
