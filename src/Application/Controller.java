@@ -2,7 +2,7 @@ package Application;
 
 import Modele.*;
 import Exception.SaisieInvalideException;
-
+import Exception.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -159,19 +159,19 @@ public class Controller {
             System.out.println("Disque déjà présent dan la discothèque.");
         }
     }
-/*
-    public static void suppressionDisque() throws DisqueException {
+
+    public static void suppressionDisque() throws AlbumIntrouvableException {
         System.out.println("Entrez le nom du disque à supprimer :");
         String nomDisque = sc.nextLine();
 
         try {
             GestionDisque.supprimerDisque(nomDisque);
-        } catch (DisqueException e) {
+        } catch (AlbumIntrouvableException e) {
             if("MULTIPLE".equals(e.getMessage())) {
                 System.out.println("Plusieurs disque portent ce nom. Veuillez préciser l'auteur");
                 try {
-                    suppressionDisqueAuteur(nomDisque);
-                } catch (AuteurException ex) {
+                    //suppressionDisqueAuteur(nomDisque);
+                } catch (AlbumIntrouvableException ex) {
                     System.err.println("Erreur : " + ex.getMessage());
                 }
             } else {
@@ -183,7 +183,7 @@ public class Controller {
     }
 
 
-    public static void afficherDiscotheque() {
+   /* public static void afficherDiscotheque() {
         ArrayList<Album> bibli = new ArrayList<>();
         bibli = GestionDisque.afficherDiscotheque();
         int cpt = 0;

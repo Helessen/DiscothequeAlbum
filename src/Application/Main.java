@@ -22,7 +22,7 @@ public class Main {
                         //Controller.rechercherAlbum();
                         break;
                     case 4 :
-                        //Controller.suppressionDisque();
+                        Controller.suppressionDisque();
                         break;
                     case 0 :
                         System.out.println("Fin du programme. Au revoir !");
