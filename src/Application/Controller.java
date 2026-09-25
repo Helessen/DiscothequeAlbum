@@ -6,7 +6,6 @@ import Exception.SaisieInvalideException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -22,7 +21,7 @@ public class Controller {
         System.out.println("[2] Lister tous les albums");
         System.out.println("[3] Rechercher un album");
         System.out.println("[4] Supprimer un album");
-        System.out.println("[] Quitter");
+        System.out.println("[0] Quitter");
         System.out.println("**********************************");
         System.out.print("Votre choix : ");
         choix = sc.nextInt();
@@ -31,17 +30,14 @@ public class Controller {
     }
 
     public static void ajouterDisque() throws SaisieInvalideException {
-        String titre;
-        try {
-            System.out.println("Saisissez le nom du disque");
-            titre = sc.nextLine();
-        } catch (SaisieInvalideException e) {
+
+        System.out.println("Saisissez le nom du disque");
+        String titre = sc.nextLine();
+
+
+        if (titre.isEmpty()) {
             throw new SaisieInvalideException("Le titre de l'album est obligatoire.");
         }
-
-        /*if (titre.isEmpty()) {
-
-        }*/
 
         System.out.println("Saisissez la date de sortie (jj/mm/aaaa) : ");
         String dateSaisie = sc.nextLine();
