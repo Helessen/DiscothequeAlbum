@@ -199,25 +199,22 @@ public class Controller {
             System.out.println("***************************************************************************************");
         }
     }
-/*
-    public static void lireDisque(ArrayList<Disque> disque) {
-        int cpt = 0;
-        int choix = 0;
-        System.out.println("Voici les disques présent dans votre discothèque :");
-        System.out.println("*****************************************************************************************");
-        for (Disque item : disque) {
-            cpt += 1;
-            System.out.println("[" + cpt + "] Titre : " + item.getNom() + " - Auteur : " + item.getAuteur() + " - Année : " + item.getAnnee());
+    public static void viderDiscotheque() {
+        System.out.println("Êtes-vous sûr de vouloir vider votre discothèque ? O/N");
+        String choix = sc.nextLine();
+        if(choix.isEmpty()) {
+            throw new SaisieInvalideException("Renseigner un numéro.");
         }
-        System.out.println("*****************************************************************************************");
-        try {
-            System.out.println("Choisissez votre disque [entrez le numéro entre crochet]");
-        } catch (InputMismatchException e) {
-            //e.printStackTrace();
-            System.out.println("Erreur de saisi, veuillez recomencer.");
-            sc.nextLine();
 
-
+        if(choix.equalsIgnoreCase("n")){
+            System.out.println("Retour au menu");
+        } else {
+            boolean vider = GestionDisque.viderDiscotheque();
+            if(vider) {
+                System.out.println("Votre discothèque a bien été vidé.");
+            } else {
+                System.out.println("La discothèque est déjà vide.");
+            }
         }
-    }*/
+    }
 }
