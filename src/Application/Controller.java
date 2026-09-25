@@ -199,8 +199,8 @@ public class Controller {
             }
             System.out.println("***************************************************************************************");
         }
-    }
-    public static void viderDiscotheque() {
+   }
+   public static void viderDiscotheque() {
         System.out.println("Êtes-vous sûr de vouloir vider votre discothèque ? O/N");
         String choix = sc.nextLine();
         if(choix.isEmpty()) {
@@ -217,5 +217,22 @@ public class Controller {
                 System.out.println("La discothèque est déjà vide.");
             }
         }
-    }
+   }
+
+   public static void rechercherAlbum(){
+       System.out.println("Quel est le titre de l'album recherché ?");
+       String titre = sc.nextLine();
+       if(titre.isEmpty()) {
+           throw new SaisieInvalideException("Renseigner un numéro.");
+       }
+
+       Album r = GestionDisque.rechercherAlbum(titre);
+
+       if(r == null){
+           System.out.println("Aucun album ne correspond à ce titre");
+       } else {
+           System.out.println(" Album : " + r.getNom() + "| Chanteur/Groupe : " + r.getAuteur() + "| Support : " + r.getSupport()+ "| Date sortie : " +r.getSortie());
+       }
+   }
+
 }

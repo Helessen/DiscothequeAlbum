@@ -58,4 +58,14 @@ public class GestionDisque {
         return true;
     }
 
+    public static Album rechercherAlbum(String titre) {
+        Album a = null;
+        for(Album item : discotheque){
+            if(titre.equalsIgnoreCase(item.getNom())) {
+                a = item;
+            }
+        }
+        return a;
+    }
+
 }
