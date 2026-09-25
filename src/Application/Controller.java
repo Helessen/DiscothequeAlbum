@@ -169,18 +169,14 @@ public class Controller {
         String nomDisque = sc.nextLine();
 
         try {
-            GestionDisque.supprimerDisque(nomDisque);
-        } catch (AlbumIntrouvableException e) {
-            if("MULTIPLE".equals(e.getMessage())) {
-                System.out.println("Plusieurs disque portent ce nom. Veuillez préciser l'auteur");
-                try {
-                    //suppressionDisqueAuteur(nomDisque);
-                } catch (AlbumIntrouvableException ex) {
-                    System.err.println("Erreur : " + ex.getMessage());
-                }
+            boolean supprimer = GestionDisque.supprimerDisque(nomDisque);
+            if (supprimer) {
+                System.out.println("Le disque a bien été supprimé");
             } else {
-                System.err.println(e.getMessage());
+                throw new AlbumIntrouvableException("Album introuvable");
             }
+        } catch (AlbumIntrouvableException e) {
+            System.err.println(e.getMessage());
         }
     }
 
